@@ -312,13 +312,24 @@ var ViewModel = function() {
     // Observable that get the array of locations
     this.locationList = ko.observableArray([]);
 
-    // Add location objects to the locationsList
+    // Add location objects to the locationList
     locations.forEach(function(location) {
         self.locationList.push( new Location(location));
     });
 
     // Observe the search term
-    this.searchTerm = ko.observable('');
+    self.searchTerm = ko.observable('');
+    self.searchResults = ko.computed(function () {
+        var filter = self.searchTerm().toLowerCase();
+
+        if (!filter) {
+            return self.locationList();
+        } else {
+            return ko.utils.arrayFilter(self.locationList(), function (location) {
+                return location.title().toLowerCase().indexOf(filter) !== -1;
+            });
+        }
+    });
 };
 
 function initMap() {

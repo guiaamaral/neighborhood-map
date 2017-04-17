@@ -31,14 +31,14 @@
       <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
           <div>
-            <input class="mdl-textfield__input" type="text" id="search">
-            <label class="mdl-textfield__label" for="search" data-bind="textInput: searchTerm">Procure um local...</label>
+            <input class="mdl-textfield__input" type="text" id="search" data-bind="textInput: searchTerm">
+            <label class="mdl-textfield__label" for="search">Procure um local...</label>
           </div>
           <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
             <i class="material-icons">search</i>
           </label>
         </div>
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" data-bind="foreach: locations">
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" data-bind="foreach: searchResults">
             <p class="mdl-navigation__link mdl-color-text--blue-grey-400" style="cursor: pointer;" data-bind="text: title"></p>
         </nav>
       </div>
