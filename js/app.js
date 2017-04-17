@@ -319,9 +319,11 @@ var ViewModel = function() {
 
     // Observe the search term
     self.searchTerm = ko.observable('');
+    // Compute the list of search result
     self.searchResults = ko.computed(function () {
         var filter = self.searchTerm().toLowerCase();
 
+        // Return a list of locations by search term
         if (!filter) {
             return self.locationList();
         } else {
