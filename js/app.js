@@ -250,10 +250,10 @@ var Location = function(location) {
     self.lat = ko.observable(location.lat);
     self.lng = ko.observable(location.lng);
 
-    // get and format date to use on FourSquare API request
+    // Get and format date to use in FourSquare API request
     var utc = new Date().toJSON().slice(0,10).replace(/-/g,'');
 
-    // connect to FourSquare API
+    // Connect to FourSquare API
     var foursquareUrl = 'https://api.foursquare.com/v2/venues/' + self.fsquareid() +
         '?client_id=PM2GJF5A5VO0ERYO5J2KTLW2IU0SU2LRQTLHVMQT4NES1TZJ' +
         '&client_secret=YLHBMIB1KVPBZV0W30APQJBPKGTLZDCE5TMB4L4HYB5WFKFZ' +
@@ -281,8 +281,8 @@ var Location = function(location) {
                     '<small>Veja mais no Foursquare</small></a>';
             });
         }
+        // Store data from FourSquare on self.content()
         self.content = ko.observable(fsquareContent);
-        console.log(self.content())
     }).fail(function() {
         self.content = ko.observable('<p>Ocorreu um problema ao conectar com o Foursquare</p>');
     });
@@ -296,11 +296,13 @@ var Location = function(location) {
     });
     markers.push(marker);
 
+    // Define content for infoWindow
     infoWindow = new google.maps.InfoWindow({
         content: self.content,
         maxWidth: 350
     });
 
+    // Click on marker to show infoWindow
     marker.addListener('click', function() {
         infoWindow.open(map, marker);
     });
@@ -323,7 +325,7 @@ var ViewModel = function() {
     self.searchResults = ko.computed(function () {
         var filter = self.searchTerm().toLowerCase();
 
-        // Return a list of locations by search term
+        // Return a list of locations filtered by search term
         if (!filter) {
             return self.locationList();
         } else {
@@ -348,7 +350,7 @@ function initMap() {
     });
 };
 
-// This is called by the Google Maps Api as a callback
+// Call Google Maps Api as a callback and create the ViewModel
 var initApp = function() {
     initMap();
     ko.applyBindings( new ViewModel() );

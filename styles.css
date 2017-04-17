@@ -232,6 +232,9 @@ _:-ms-input-placeholder, :root .demo-graph {
 .mdl-textfield {
   padding: 18px 0;
 }
+.mdl-textfield__label {
+  color: rgba(255,255,255,0.25);
+}
 .mdl-textfield__input,
 .mdl-textfield__label {
   width: 80%;
