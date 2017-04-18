@@ -10,5 +10,5 @@ The Neighborhood Map display some places to have fun in the trendy neighborhood 
 
 #### Features
 1. List of places with search option
-2. Clicking in some place or on map's marker you get some informations from Foursquare about the specific place [TO-DO]
+2. Clicking in some place or on map's marker you get some informations from Foursquare about the specific place
 3. Responsive design to have good experience on cross-devices
