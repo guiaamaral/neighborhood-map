@@ -250,6 +250,11 @@ var Location = function(location) {
     self.lat = ko.observable(location.lat);
     self.lng = ko.observable(location.lng);
 
+    // Define content for infoWindow
+    self.infoWindow = new google.maps.InfoWindow({
+        maxWidth: 350
+    });
+
     // Get and format date to use in FourSquare API request
     var utc = new Date().toJSON().slice(0,10).replace(/-/g,'');
 
@@ -284,8 +289,8 @@ var Location = function(location) {
             });
             // Store fsquareContent data to self.content()
             self.content = ko.observable(fsquareContent);
+            self.infoWindow.setContent(self.content());
         }
-        console.log(self.content());
     }).fail(function() {
         self.content = ko.observable('<p>Ocorreu um problema ao conectar com o Foursquare</p>');
     });
@@ -312,15 +317,9 @@ var Location = function(location) {
     });
     self.showMarker(true);
 
-    // Define content for infoWindow
-    //infoWindow = new google.maps.InfoWindow({
-    //    maxWidth: 350,
-    //    content: self.content()
-    //});
-
     // Click on marker to show infoWindow
     marker.addListener('click', function() {
-        infoWindow.open(map, marker);
+        self.infoWindow.open(map, marker);
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function(){
             marker.setAnimation(null);
@@ -330,7 +329,7 @@ var Location = function(location) {
 
     // Click on list to show infoWindow
     self.selectLocation = function(location) {
-        infoWindow.open(map, marker);
+        self.infoWindow.open(map, marker);
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function(){
             marker.setAnimation(null);
