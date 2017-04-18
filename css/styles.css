@@ -1,0 +1,101 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+html, body {
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#header {
+  background: #f5f5f5;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.25);
+  z-index: 2;
+}
+#header h1 {
+  color: #37474f;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 21px;
+}
+#main {
+  height: 100%;
+}
+#sidebar {
+  background: #37474f;
+  padding: 0px;
+  height: 100%;
+  color: #78909c;
+  font-weight: bold;
+  z-index: 1;
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.25);
+}
+#sidebar .input-group-addon {
+  background: none;
+  border: none;
+  color: #fff;
+}
+#sidebar input {
+  font-weight: normal;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #07adc3;
+  padding: 10px;
+  width: 90%;
+}
+#sidebar input:active,
+#sidebar input:focus {
+  box-shadow: 0 0 0;
+  color: #fff;
+}
+#sidebar nav {
+  margin-top: 10px;
+}
+@media screen and (max-height: 600px) {
+  #sidebar nav {
+    overflow: scroll;
+    height: 80%;
+  }
+}
+#sidebar p {
+  padding: 4px 10px;
+  cursor: pointer;
+  display: block;
+}
+#sidebar p:hover {
+  background: #07adc3;
+  color: #fff;
+}
+#map {
+  height: 100%;
+  z-index: 0;
+}
+#infowindow h1 {
+  font-size: 32px;
+  line-height: 1;
+  margin: 8px 0 0;
+}
+#infowindow h1 small {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 10px;
+}
+#infowindow .rating {
+  padding: 1px 4px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+}

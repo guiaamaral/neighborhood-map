@@ -277,7 +277,7 @@ var Location = function(location) {
             var fsquareQuery =  data.response.venue;
             $.each(fsquareQuery, function(i, venue) {
                 fsquareContent =
-                    '<div class="infowindow"><img src="' + fsquareQuery.bestPhoto.prefix +
+                    '<div id="infowindow"><img src="' + fsquareQuery.bestPhoto.prefix +
                     'width200' + fsquareQuery.bestPhoto.suffix + '"><br>' +
                     '<h1>' + fsquareQuery.name + '<small><em> ' + fsquareQuery.categories[0].name + '</em></small></h1>' +
                     '<p>' + fsquareQuery.location.address +
