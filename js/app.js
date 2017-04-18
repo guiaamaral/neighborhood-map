@@ -190,8 +190,8 @@ var locations = [
     {
         title: 'Boteco São Bento',
         fsquareid: '4b510337f964a520893d27e3',
-        lat: -22.894496,
-        lng: -47.053935
+        lat: -22.8990779,
+        lng: -47.0504769
     },
     {
         title: 'Seo Rosa',
@@ -287,14 +287,24 @@ var Location = function(location) {
         self.content = ko.observable('<p>Ocorreu um problema ao conectar com o Foursquare</p>');
     });
 
-    // Create marker and display on map
+    // Create marker
     var marker = new google.maps.Marker({
         position: {lat: self.lat(), lng: self.lng()},
         animation: google.maps.Animation.DROP,
         title: self.title(),
         map: map
     });
-    markers.push(marker);
+
+    // Define if show or not marker based on showMarker variable
+    self.showMarker = ko.observable(false);
+    self.showMarker.subscribe(function(currentState) {
+        if (currentState) {
+            marker.setMap(map);
+        } else {
+            marker.setMap(null);
+        }
+    });
+    self.showMarker(true);
 
     // Define content for infoWindow
     infoWindow = new google.maps.InfoWindow({
@@ -306,6 +316,7 @@ var Location = function(location) {
     marker.addListener('click', function() {
         infoWindow.open(map, marker);
     });
+
 };
 
 var ViewModel = function() {
@@ -324,15 +335,12 @@ var ViewModel = function() {
     // Compute the list of search result
     self.searchResults = ko.computed(function () {
         var filter = self.searchTerm().toLowerCase();
-
-        // Return a list of locations filtered by search term
-        if (!filter) {
-            return self.locationList();
-        } else {
-            return ko.utils.arrayFilter(self.locationList(), function (location) {
-                return location.title().toLowerCase().indexOf(filter) !== -1;
-            });
-        }
+        // Return a list of locations and markers filtered by search term
+        return ko.utils.arrayFilter(self.locationList(), function (location) {
+            var match = location.title().toLowerCase().indexOf(filter) !== -1;
+            location.showMarker(match);
+            return match;
+        });
     });
 };
 
@@ -346,7 +354,7 @@ function initMap() {
             lat: -22.8945359,
             lng: -47.0539138
         },
-        zoom: 16
+        zoom: 15
     });
 };
 
