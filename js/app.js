@@ -249,6 +249,8 @@ var Location = function(location) {
     self.fsquareid = ko.observable(location.fsquareid);
     self.lat = ko.observable(location.lat);
     self.lng = ko.observable(location.lng);
+    self.currentLocation = ko.observable(null);
+    self.isActive = ko.observable(false);
 
     // Define content for infoWindow
     self.infoWindow = new google.maps.InfoWindow({
@@ -290,6 +292,7 @@ var Location = function(location) {
             // Store fsquareContent data to self.content()
             self.content = ko.observable(fsquareContent);
             self.infoWindow.setContent(self.content());
+            self.isActive(true);
         }
     }).fail(function() {
         self.content = ko.observable('<p>Ocorreu um problema ao conectar com o Foursquare</p>');
@@ -367,7 +370,7 @@ var ViewModel = function() {
 };
 
 function initMap() {
-    // Initialize map, hide navigation controls and set custom style
+    // Initialize map variable (hide navigation controls and set custom style)
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeControl: false,
         disableDefaultUI: true,
@@ -379,10 +382,18 @@ function initMap() {
         zoom: 15
     });
 
+    // Initialize bounds variable
     bounds = new google.maps.LatLngBounds();
 };
 
-// Call Google Maps Api as a callback and create the ViewModel
+// Show message to user when google maps isn't working
+function googlemapsError() {
+    "use strict";
+    document.getElementById('error').innerHTML = "<h2>O Google Maps não pode ser carregado. " +
+                                                 "Por favor, tente novamente atualizar a página.</h2>";
+}
+
+// Call Google Maps API as a callback and create the ViewModel
 var initApp = function() {
     initMap();
     ko.applyBindings( new ViewModel() );
