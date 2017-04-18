@@ -295,6 +295,9 @@ var Location = function(location) {
         map: map
     });
 
+    // Extend map bounds with new markers
+    bounds.extend(marker.position);
+
     // Define if show or not marker based on showMarker variable
     self.showMarker = ko.observable(false);
     self.showMarker.subscribe(function(currentState) {
@@ -315,8 +318,14 @@ var Location = function(location) {
     // Click on marker to show infoWindow
     marker.addListener('click', function() {
         infoWindow.open(map, marker);
+        map.fitBounds(bounds);
     });
 
+    // Click on list to show infoWindow
+    self.selectLocation = function(location) {
+        infoWindow.open(map, marker);
+        map.fitBounds(bounds);
+     }
 };
 
 var ViewModel = function() {
@@ -329,6 +338,9 @@ var ViewModel = function() {
     locations.forEach(function(location) {
         self.locationList.push( new Location(location));
     });
+
+    // Fit map to new bounds
+    map.fitBounds(bounds);
 
     // Observe the search term
     self.searchTerm = ko.observable('');
@@ -356,6 +368,8 @@ function initMap() {
         },
         zoom: 15
     });
+
+    bounds = new google.maps.LatLngBounds();
 };
 
 // Call Google Maps Api as a callback and create the ViewModel
