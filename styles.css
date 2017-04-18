@@ -240,3 +240,19 @@ _:-ms-input-placeholder, :root .demo-graph {
   width: 80%;
   margin-left: 40px;
 }
+.infowindow h1 {
+  font-size: 32px;
+  line-height: 1;
+  margin: 8px 0 0;
+}
+.infowindow h1 small {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 10px;
+}
+.infowindow .rating {
+  padding: 1px 4px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+}

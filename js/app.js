@@ -253,22 +253,24 @@ var Location = function(location) {
     // Get and format date to use in FourSquare API request
     var utc = new Date().toJSON().slice(0,10).replace(/-/g,'');
 
-    // Connect to FourSquare API
+    // Mount FourSquare API URL to get content from each location
     var foursquareUrl = 'https://api.foursquare.com/v2/venues/' + self.fsquareid() +
         '?client_id=PM2GJF5A5VO0ERYO5J2KTLW2IU0SU2LRQTLHVMQT4NES1TZJ' +
         '&client_secret=YLHBMIB1KVPBZV0W30APQJBPKGTLZDCE5TMB4L4HYB5WFKFZ' +
         '&v=' + utc;
+
+    // Connect to FourSquare API
     jQuery.ajax({
         url: foursquareUrl,
         dataType: 'json'
     }).done(function(data) {
         var fsquareContent = '';
-        // if api return data proceed and store content into fsquareContent variable
+        // If API return data proceed and store content into
         if (data) {
             var fsquareQuery =  data.response.venue;
             $.each(fsquareQuery, function(i, venue) {
                 fsquareContent =
-                    '<img src="' + fsquareQuery.bestPhoto.prefix +
+                    '<div class="infowindow"><img src="' + fsquareQuery.bestPhoto.prefix +
                     'width200' + fsquareQuery.bestPhoto.suffix + '"><br>' +
                     '<h1>' + fsquareQuery.name + '<small><em> ' + fsquareQuery.categories[0].name + '</em></small></h1>' +
                     '<p>' + fsquareQuery.location.address +
@@ -278,11 +280,12 @@ var Location = function(location) {
                     '<br>Avaliado por: ' + fsquareQuery.ratingSignals + ' usuários' +
                     '<br>Preço segundo clientes: ' + fsquareQuery.price.message + '</p>' +
                     '<a href="' + fsquareQuery.canonicalUrl + '" target="_blank">' +
-                    '<small>Veja mais no Foursquare</small></a>';
+                    '<small>Veja mais no Foursquare</small></a></div>';
             });
+            // Store fsquareContent data to self.content()
+            self.content = ko.observable(fsquareContent);
         }
-        // Store data from FourSquare on self.content()
-        self.content = ko.observable(fsquareContent);
+        console.log(self.content());
     }).fail(function() {
         self.content = ko.observable('<p>Ocorreu um problema ao conectar com o Foursquare</p>');
     });
@@ -310,22 +313,30 @@ var Location = function(location) {
     self.showMarker(true);
 
     // Define content for infoWindow
-    infoWindow = new google.maps.InfoWindow({
-        content: self.content,
-        maxWidth: 350
-    });
+    //infoWindow = new google.maps.InfoWindow({
+    //    maxWidth: 350,
+    //    content: self.content()
+    //});
 
     // Click on marker to show infoWindow
     marker.addListener('click', function() {
         infoWindow.open(map, marker);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
+            marker.setAnimation(null);
+        }, 1500);
         map.fitBounds(bounds);
     });
 
     // Click on list to show infoWindow
     self.selectLocation = function(location) {
         infoWindow.open(map, marker);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function(){
+            marker.setAnimation(null);
+        }, 1500);
         map.fitBounds(bounds);
-     }
+    };
 };
 
 var ViewModel = function() {
