@@ -295,7 +295,9 @@ var Location = function(location) {
             self.isActive(true);
         }
     }).fail(function() {
-        self.content = ko.observable('<p>Ocorreu um problema ao conectar com o Foursquare</p>');
+        self.content = ko.observable('<p class="text-center">Ocorreu um problema ao'+
+                                     '<br/>conectar com o Foursquare</p>');
+        self.infoWindow.setContent(self.content());
     });
 
     // Create marker
@@ -313,9 +315,9 @@ var Location = function(location) {
     self.showMarker = ko.observable(false);
     self.showMarker.subscribe(function(currentState) {
         if (currentState) {
-            marker.setMap(map);
+            marker.setVisible(true);
         } else {
-            marker.setMap(null);
+            marker.setVisible(false);
         }
     });
     self.showMarker(true);
@@ -387,10 +389,11 @@ function initMap() {
 };
 
 // Show message to user when google maps isn't working
-function googlemapsError() {
+function googleMapsError() {
     "use strict";
-    document.getElementById('error').innerHTML = "<h2>O Google Maps não pode ser carregado. " +
-                                                 "Por favor, tente novamente atualizar a página.</h2>";
+    document.getElementById('error').innerHTML = "<h4>O Google Maps não pôde ser carregado. " +
+                                                 "Por favor, tente novamente mais tarde.</h4>";
+    console.log('Verifique se não há erros na conexão com o Google Maps.');
 }
 
 // Call Google Maps API as a callback and create the ViewModel

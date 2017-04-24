@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
   </head>
   <body class="container-fluid">
+    <div id="error" class="col-xs-7 col-sm-9 col-md-10 col-lg-10 text-center"></div>
     <header id="header" class="row">
       <div class="col-sm-12">
         <h1 class="text-center text-uppercase">Neighborhood Map</h1>
@@ -31,6 +32,6 @@
     <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0x_XyAdNnNtjuwjtOA3BnLh9AWJY18FA&callback=initApp" onerror="googlemapsError()"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0x_XyAdNnNtjuwjtOA3BnLh9AWJY18FA&callback=initApp" onerror="googleMapsError()"></script>
   </body>
 </html>

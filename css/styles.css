@@ -102,3 +102,13 @@ html, body {
   color: #fff;
   font-weight: bold;
 }
+#error {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  z-index: 0;
+  height: 100%;
+  padding: 50px;
+}
