@@ -237,9 +237,6 @@ var locations = [
     }
 ];
 
-// Variable to store markers to show on map
-var markers = [];
-
 // Function that observe locations data and create marker
 var Location = function(location) {
     var self = this;
@@ -322,18 +319,8 @@ var Location = function(location) {
     });
     self.showMarker(true);
 
-    // Click on marker to show infoWindow
-    marker.addListener('click', function() {
-        self.infoWindow.open(map, marker);
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){
-            marker.setAnimation(null);
-        }, 1500);
-        map.fitBounds(bounds);
-    });
-
     // Click on list to show infoWindow
-    self.selectLocation = function(location) {
+    self.selectLocation = function() {
         self.infoWindow.open(map, marker);
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function(){
@@ -341,6 +328,9 @@ var Location = function(location) {
         }, 1500);
         map.fitBounds(bounds);
     };
+
+    // Click on marker to show infoWindow
+    marker.addListener('click', self.selectLocation);
 };
 
 var ViewModel = function() {
